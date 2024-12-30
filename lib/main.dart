@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import "packages/circular_border.dart";
 
 void main() {
   runApp(const MyApp());
@@ -12,50 +14,90 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ShuttleMate',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'ShuttleMate'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class BorderToggleButton extends StatefulWidget {
+  final String label;
+  final Color color;
+
+  const BorderToggleButton({
+    super.key, // Use super parameter for key
+    required this.label,
+    required this.color,
+  });
+  
+  @override
+  BorderToggleButtonState createState() => BorderToggleButtonState();
+}
+
+class BorderToggleButtonState extends State<BorderToggleButton> {
+  bool isDashed = true;
+
+  void _toggleBorder() {
+    setState(() {
+      isDashed = !isDashed;
+    });
+  }
+
+  @override
+   Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white, // Set the background color to white
+        shape: BoxShape.circle, // Set the shape to circle
+        border: isDashed
+            ? null
+            : Border.all(
+                color: widget.color,
+                width: 4,
+              ),
+      ),
+      child: CustomPaint(
+        painter: isDashed ? DashedCircularBorderPainter(color: widget.color, strokeWidth: 4) : null,
+        child: IconButton(
+          icon: Icon(
+            Icons.directions_bus,
+            size: isDashed ? 40 : 30, // Toggle icon size based on border style
+          ),
+          onPressed: () {
+            _toggleBorder();
+            print("Button pressed");
+          },
+          color: Colors.black, // Set the color to black
+        ),
+      ),
+    );
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..loadRequest(
+        Uri.parse('https://chicago.passiogo.com/'),
+      );
+  }
+
   Future<void> _launchURL() async {
     final Uri url = Uri.parse('https://chicago.passiogo.com/');
     if (await canLaunchUrl(url)) {
@@ -63,30 +105,82 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       throw 'Could not launch $url';
     }
-}
+  }
+
+  final List<Map<String, dynamic>> buttonData = [
+    {'label': 'Central', 'color': Colors.orange},
+    {'label': 'East', 'color': Colors.green},
+    {'label': 'Friend Center/Metra', 'color': Colors.brown},
+    {'label': 'Gleacher Express', 'color': Colors.black},
+    {'label': 'North', 'color': Colors.blue},
+    {'label': 'Red Line/Arts Block', 'color': Colors.red},
+    {'label': 'South', 'color': Colors.deepOrangeAccent},
+  ];
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        title: GestureDetector(
+          onTap: _launchURL,
+          child: Container(
+            padding: const EdgeInsets.all(3.0), // Add padding if needed
+            child: Image.asset(
+              'assets/ShuttleMateLogo.png',
+              fit: BoxFit.contain, // Ensure the image fits within the container
+            ),
+          ),
+        ),
+        backgroundColor: Color(0xFF800000),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFF800000), Color(0xFF4C0202)],
             begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            end: Alignment.bottomLeft,
           ),
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              GestureDetector(
-                onTap: _launchURL,
-                child: Image.asset(
-                  'assets/ShuttleMateLogo.png',
-                  width: screenWidth * 0.9,
+              SizedBox(
+                width: screenWidth * 1, // Set the desired width here
+                height: screenHeight * 0.5, // Set the desired height here
+                child: WebViewWidget(
+                  controller: controller,
+                ),
+              ),
+              Text(
+                "Shuttle Stops",
+                  style: TextStyle(
+                  fontFamily: 'DelaGothicOne',
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5, // 5 columns
+                  ),
+                  itemCount: buttonData.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                    padding: const EdgeInsets.all(8.0), // Add margin between buttons
+                    child: Tooltip(
+                      message: '${buttonData[index]['label']}', // Display button index and label
+                      child: BorderToggleButton(
+                        label: buttonData[index]['label'],
+                        color: buttonData[index]['color'],
+                      ),
+                    ),
+                  );
+                  },
                 ),
               ),
             ],
