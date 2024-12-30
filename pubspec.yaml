@@ -65,3 +65,7 @@ flutter:
     - family: DelaGothicOne
       fonts:
         - asset: assets/fonts/DelaGothicOne-Regular.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+    

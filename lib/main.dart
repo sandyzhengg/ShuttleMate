@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 import "packages/circular_border.dart";
+import "packages/dropdown_options.dart";
 
 void main() {
   runApp(const MyApp());
@@ -116,6 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
     {'label': 'South', 'color': Colors.deepOrangeAccent},
   ];
 
+  String dropdownValue = 'Mansueto Library';
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -157,11 +161,47 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Going Somewhere?",
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 20,
+                          fontSize: 15,
                           color: Colors.white,
                         ),
                       ),
-                      // Add more widgets to Column 1 as needed
+                      DropdownButtonHideUnderline(
+                        child: Container(
+                          width: screenWidth * 0.5,
+                          height: screenWidth * 0.1,
+                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(color: Color(0xFF303030), width: 4),
+                          ),
+                          child: DropdownButton<String>(
+                            value: dropdownValue,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue!;
+                              });
+                            },
+                            items: dropdownOptions.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 8,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Column(
@@ -179,11 +219,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
               ],
               ),
-              SizedBox(
-                width: screenWidth * 1, // Set the desired width here
-                height: screenHeight * 0.5, // Set the desired height here
-                child: WebViewWidget(
-                  controller: controller,
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.black,
+                      width: 5, // Set the desired border width here
+                    ),
+                  ),
+                ),
+                child: SizedBox(
+                  width: screenWidth * 1, // Set the desired width here
+                  height: screenHeight * 0.5, // Set the desired height here
+                  child: WebViewWidget(
+                    controller: controller,
+                  ),
                 ),
               ),
               Text(
