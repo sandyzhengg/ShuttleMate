@@ -66,15 +66,15 @@ class BorderToggleButtonState extends State<BorderToggleButton> {
             ? null
             : Border.all(
                 color: widget.color,
-                width: 4,
+                width: 5,
               ),
       ),
       child: CustomPaint(
-        painter: isDashed ? DashedCircularBorderPainter(color: widget.color, strokeWidth: 4) : null,
+        painter: isDashed ? DashedCircularBorderPainter(color: widget.color, strokeWidth: 5) : null,
         child: IconButton(
           icon: Icon(
             Icons.directions_bus,
-            size: isDashed ? 40 : 30, // Toggle icon size based on border style
+            size: isDashed ? 45 : 35, // Toggle icon size based on border style
           ),
           onPressed: () {
             _toggleBorder();
@@ -119,11 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   String dropdownValue = 'Mansueto Library';
-
+ 
   @override
   Widget build(BuildContext context) {
   final double screenWidth = MediaQuery.of(context).size.width;
   final double screenHeight = MediaQuery.of(context).size.height;
+
+  bool isDay = false;
 
   return Scaffold(
     appBar: AppBar(
@@ -221,7 +223,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.white,
                       ),
                     ),
-                    // Add more widgets to Column 2 as needed
+                    SizedBox(height: 5), // Add padding between the Text and ToggleButtons
+                    DayNightSwitch(
+                      isDay: isDay,
+                      onChanged: (value) {
+                          setState(() {
+                            isDay = value;
+                          });
+                      }),
                   ],
                 ),
               ],
@@ -281,4 +290,58 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 }
+}
+
+class DayNightSwitch extends StatefulWidget {
+  const DayNightSwitch({
+    super.key,
+    required this.isDay,
+    required this.onChanged,
+  });
+
+  final bool isDay;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  DayNightSwitchState createState() => DayNightSwitchState();
+}
+
+class DayNightSwitchState extends State<DayNightSwitch> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        widget.onChanged(!widget.isDay);
+      },
+      child: Container(
+        width: 60,
+        height: 30,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: widget.isDay ? Colors.yellow : Colors.blueGrey,
+        ),
+        child: Stack(
+          children: [
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+              left: widget.isDay ? 0 : 30,
+              right: widget.isDay ? 30 : 0,
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: widget.isDay
+                    ? Icon(Icons.wb_sunny, color: Colors.yellow)
+                    : Icon(Icons.nights_stay, color: Colors.blueGrey),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
