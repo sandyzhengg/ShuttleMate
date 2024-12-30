@@ -126,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: GestureDetector(
           onTap: _launchURL,
           child: Container(
+            width: screenWidth * 0.9,
             padding: const EdgeInsets.all(3.0), // Add padding if needed
             child: Image.asset(
               'assets/ShuttleMateLogo.png',
@@ -147,6 +148,37 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+              Column(
+                    children: [
+                      Text(
+                        "Going Somewhere?",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      // Add more widgets to Column 1 as needed
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "Daytime",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      // Add more widgets to Column 2 as needed
+                    ],
+                  ),
+              ],
+              ),
               SizedBox(
                 width: screenWidth * 1, // Set the desired width here
                 height: screenHeight * 0.5, // Set the desired height here
@@ -161,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontSize: 20,
                   color: Colors.white,
                 ),
-),
+              ),
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
