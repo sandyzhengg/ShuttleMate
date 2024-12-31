@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import "packages/circular_border.dart";
 import "packages/dropdown_options.dart";
+import "packages/day_night_toggle.dart";
 
 void main() {
   runApp(const MyApp());
@@ -31,60 +31,6 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class BorderToggleButton extends StatefulWidget {
-  final String label;
-  final Color color;
-
-  const BorderToggleButton({
-    super.key, // Use super parameter for key
-    required this.label,
-    required this.color,
-  });
-  
-  @override
-  BorderToggleButtonState createState() => BorderToggleButtonState();
-}
-
-class BorderToggleButtonState extends State<BorderToggleButton> {
-  bool isDashed = true;
-
-  void _toggleBorder() {
-    setState(() {
-      isDashed = !isDashed;
-    });
-  }
-
-  @override
-   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white, // Set the background color to white
-        shape: BoxShape.circle, // Set the shape to circle
-        border: isDashed
-            ? null
-            : Border.all(
-                color: widget.color,
-                width: 5,
-              ),
-      ),
-      child: CustomPaint(
-        painter: isDashed ? DashedCircularBorderPainter(color: widget.color, strokeWidth: 5) : null,
-        child: IconButton(
-          icon: Icon(
-            Icons.directions_bus,
-            size: isDashed ? 45 : 35, // Toggle icon size based on border style
-          ),
-          onPressed: () {
-            _toggleBorder();
-            print("Button pressed");
-          },
-          color: Colors.black, // Set the color to black
-        ),
-      ),
-    );
-  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -179,12 +125,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        backgroundColor: isDay ? Color(0xFF800000) : Color(0xFF4C0202),
+        backgroundColor: isDay ? Color(0xFF640000) : Color(0xFF410000),
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF800000), Color(0xFF4C0202)],
+            colors: (isDay ? [Color(0xFF640000), Color(0xFF410000)] : [Color(0xFF410000), Color(0xFF1e0000)]),
             begin: Alignment.topLeft,
             end: Alignment.bottomLeft,
           ),
@@ -204,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: screenWidth * 0.05,
-                        color: Colors.white,
+                        color: isDay ?Colors.white : Colors.yellowAccent,
                       ),
                     ),
                     SizedBox(height: screenWidth * 0.025),
@@ -216,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
-                          border: Border.all(color: Color(0xFF303030), width: 4),
+                          border: Border.all(color: isDay ? Color(0xFFc1e7e8): Color(0xFF252e2e), width: 4),
                         ),
                         child: DropdownButton<String>(
                           isExpanded: true,
@@ -259,10 +205,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: screenWidth * 0.05,
-                        color: Colors.white,
+                        color: isDay ?Colors.white : Colors.yellowAccent,
                       ),
                     ),
-                    SizedBox(height: 5), // Add padding between the Text and ToggleButtons
+                    SizedBox(height: screenWidth * 0.025), // Add padding between the Text and ToggleButtons
                     DayNightSwitch(
                       isDay: isDay,
                       onChanged: (value) {
@@ -287,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             child: SizedBox(
               width: screenWidth * 1,
-              height: screenHeight * 0.45,
+              height: screenHeight * 0.5,
               child: WebViewWidget(controller: controller),
             ),
           ),
@@ -299,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                 fontFamily: 'DelaGothicOne',
                 fontSize: screenWidth * 0.05,
-                color: Colors.white,
+                color: isDay ?Colors.white : Colors.yellowAccent,
               ),
             ),
           ),
@@ -307,9 +253,9 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
   child: GridView.builder(
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 5, // 5 columns
-      crossAxisSpacing: 8.0,
-      mainAxisSpacing: 8.0,
+      crossAxisCount: 6, // 6 columns
+      crossAxisSpacing: screenWidth * 0.01,
+      mainAxisSpacing: screenWidth * 0.025,
     ),
     itemCount: currentRoutes.length,
     itemBuilder: (context, index) {
@@ -317,14 +263,14 @@ class _MyHomePageState extends State<MyHomePage> {
       return GestureDetector(
         onTap: () => _showRouteStops(route),
         child: Container(
-          width: 70,
-          height: 70,
+          width: screenWidth * 0.45,
+          height: screenWidth * 0.45,
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
             border: Border.all(
               color: route['color'], // Border color based on route
-              width: 3,
+              width: screenWidth * 0.01,
             ),
           ),
           child: Column(
@@ -332,15 +278,14 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Icon(
                 Icons.directions_bus, // Bus icon
-                size: 30, // Adjust the size of the icon
+                size: screenWidth * 0.05, // Adjust the size of the icon
                 color: route['color'], // Icon color matching the route
               ),
-              const SizedBox(height: 5), // Spacing between icon and text
               Text(
                 route['label'],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: screenWidth * 0.015,
                   fontWeight: FontWeight.bold,
                   color: route['color'], // Text color matching the route
                 ),
@@ -390,57 +335,4 @@ void _showRouteStops(Map<String, dynamic> route) {
   );
 }
 
-}
-
-class DayNightSwitch extends StatefulWidget {
-  const DayNightSwitch({
-    super.key,
-    required this.isDay,
-    required this.onChanged,
-  });
-
-  final bool isDay;
-  final ValueChanged<bool> onChanged;
-
-  @override
-  _DayNightSwitchState createState() => _DayNightSwitchState();
-}
-
-class _DayNightSwitchState extends State<DayNightSwitch> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => widget.onChanged(!widget.isDay),
-      child: Container(
-        width: 60,
-        height: 30,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: widget.isDay ? Colors.yellow : Colors.blueGrey,
-        ),
-        child: Stack(
-          children: [
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeIn,
-              left: widget.isDay ? 0 : 30,
-              right: widget.isDay ? 30 : 0,
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Icon(
-                  widget.isDay ? Icons.wb_sunny : Icons.nights_stay,
-                  color: widget.isDay ? Colors.yellow : Colors.blueGrey,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
