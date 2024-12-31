@@ -4,6 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import "packages/dropdown_options.dart";
 import "packages/day_night_toggle.dart";
+import 'packages/route_info_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -261,7 +262,14 @@ class _MyHomePageState extends State<MyHomePage> {
     itemBuilder: (context, index) {
       final route = currentRoutes[index];
       return GestureDetector(
-        onTap: () => _showRouteStops(route),
+        onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RouteInfoPage(
+                        routePage: route,
+                      ),
+                    ),
+                  ),
         child: Container(
           width: screenWidth * 0.45,
           height: screenWidth * 0.45,
