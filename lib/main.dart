@@ -285,9 +285,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 route['label'],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: screenWidth * 0.015,
+                  fontSize: screenWidth * 0.02,
                   fontWeight: FontWeight.bold,
-                  color: route['color'], // Text color matching the route
+                  color: Colors.black, // Text color matching the route
                 ),
               ),
             ],
