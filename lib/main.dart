@@ -66,19 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setNavigationDelegate(
-      NavigationDelegate(
-        onPageStarted: (String url) {
-          print('Page started loading: $url');
-        },
-        onPageFinished: (String url) {
-          print('Page finished loading: $url');
-        },
-        onWebResourceError: (error) {
-          print('Error loading page: ${error.description}');
-        },
-      ),
-    )
     ..loadRequest(
       Uri.parse('https://chicago.passiogo.com/'),
     );
@@ -314,7 +301,7 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 }
 
-//show stops method
+/**
 void _showRouteStops(Map<String, dynamic> route) {
   showModalBottomSheet(
     context: context,
@@ -342,5 +329,5 @@ void _showRouteStops(Map<String, dynamic> route) {
     },
   );
 }
-
+**/
 }

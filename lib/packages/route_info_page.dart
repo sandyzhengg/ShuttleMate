@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class RouteInfoPage extends StatelessWidget {
   final Map<String, dynamic> routePage;
 
-  const RouteInfoPage({Key? key, required this.routePage}) : super(key: key);
+  const RouteInfoPage({
+    super.key,
+    required this.routePage,
+  });
 
   @override
   Widget build(BuildContext context) {

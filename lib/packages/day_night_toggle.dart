@@ -11,10 +11,10 @@ class DayNightSwitch extends StatefulWidget {
   final ValueChanged<bool> onChanged;
 
   @override
-  _DayNightSwitchState createState() => _DayNightSwitchState();
+  DayNightSwitchState createState() => DayNightSwitchState();
 }
 
-class _DayNightSwitchState extends State<DayNightSwitch> {
+class DayNightSwitchState extends State<DayNightSwitch> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
