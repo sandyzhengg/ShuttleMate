@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
   url_launcher: ^6.0.20
   webview_flutter: ^4.10.0
-  day_night_switch:
+  # day_night_switch: ^1.0.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -88,15 +88,53 @@ class BorderToggleButtonState extends State<BorderToggleButton> {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //Daytime and Nightime route lists
+  final List<Map<String, dynamic>> daytimeRoutes = [
+    {'label': 'Friend Center & Metra', 'stops': ['Bartlett Dining Commons', 'Campus North Residential Commons', 'Ratner', 'Max Palevsky Residential Commons', 'Regenstein Library/Mansueto'], 'color': Colors.blue},
+    {'label': 'Drexel', 'stops': ['Crown Family School of Social Work, Policy, and Practice', 'Henry Crown', 'Snell-Hitchcock Hall', 'Woodlawn Residential Hall', 'Renee Granville-Grossman Residential Commons'],'color': Colors.purple},
+    {'label': 'Apostolic/Drexel', 'stops': ['Apostolic Church', 'Logan Center for the Arts', 'Rockefeller Memorial Chapel', 'Stagg Field', 'Saieh Hall', 'William Eckhardt Research Center'],'color': Colors.orange},
+    {'label': 'Apostolic', 'stops': ['Smart Museum of Art', 'Stony Island Metra Stop', 'Midway Plaisance'],'color': Colors.pink},
+    {'label': '53rd Street Express', 'stops': ['Harper Court', 'Shops on 53rd Street', 'Stony Island Metra Stop'],'color': Colors.green},
+    {'label': 'Midway Metra', 'stops': ['Midway Plaisance', 'International House', 'Charles M. Harper Center (Booth School of Business)', 'Oriental Institute Museum'],'color': Colors.black},
+    {'label': 'RedLine/Arts Block', 'stops': ['Garfield Red Line', 'Garfield Green Line', 'Arts Block', 'Washington Park', 'Logan Center for the Arts', 'KPTC'],'color':Colors.red},
+  ];
+
+  final List<Map<String, dynamic>> nighttimeRoutes = [
+    {'label': 'North Route', 'stops': ['Ratner', 'Campus North Residential Commons', 'Max Palevsky Residential Commons', 'Bartlett Dining Commons', 'Regenstein Library/Mansueto', 'Snell-Hitchcock Hall', 'Stuart Hall'],'color': Colors.lightBlue},
+    {'label': 'South Route', 'stops': ['Woodlawn Residential Commons', 'Renee Granville-Grossman Residential Commons', 'Logan Center for the Arts', 'Rockefeller Memorial Chapel', 'Midway Plaisance'],'color': Colors.red},
+    {'label': 'East Route', 'stops': ['International House', 'Saieh Hall', 'Harper Memorial Library'],'color': Colors.green},
+    {'label': 'Central Route', 'stops': ['Charles M. Harper Center (Booth School of Business)', 'KPTC', 'Eckhardt Research Center', 'Oriental Institute Museum'],'color': Colors.orange},
+    {'label': 'Regents Express', 'stops': ['University of Chicago Medicine', 'Gleacher Center', 'Stony Island Metra Stop'],'color': Colors.purple},
+  ];
   late final WebViewController controller;
+
+  bool isDay = true;
+
+  List<Map<String, dynamic>> get currentRoutes => isDay ? daytimeRoutes : nighttimeRoutes;
+
 
   @override
   void initState() {
-    super.initState();
-    controller = WebViewController()
-      ..loadRequest(
-        Uri.parse('https://chicago.passiogo.com/'),
-      );
+  super.initState();
+
+  controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onPageStarted: (String url) {
+          print('Page started loading: $url');
+        },
+        onPageFinished: (String url) {
+          print('Page finished loading: $url');
+        },
+        onWebResourceError: (error) {
+          print('Error loading page: ${error.description}');
+        },
+      ),
+    )
+    ..loadRequest(
+      Uri.parse('https://chicago.passiogo.com/'),
+    );
   }
 
   Future<void> _launchURL() async {
@@ -108,51 +146,51 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  final List<Map<String, dynamic>> buttonData = [
-    {'label': 'Central', 'color': Colors.orange},
-    {'label': 'East', 'color': Colors.green},
-    {'label': 'Friend Center/Metra', 'color': Colors.brown},
-    {'label': 'Gleacher Express', 'color': Colors.black},
-    {'label': 'North', 'color': Colors.blue},
-    {'label': 'Red Line/Arts Block', 'color': Colors.red},
-    {'label': 'South', 'color': Colors.deepOrangeAccent},
-  ];
+  //Replaced with NightTime and DayTime Lists
+  //final List<Map<String, dynamic>> buttonData = [
+    //{'label': 'Central', 'color': Colors.orange},
+    //{'label': 'East', 'color': Colors.green},
+    //{'label': 'Friend Center/Metra', 'color': Colors.brown},
+    //{'label': 'Gleacher Express', 'color': Colors.black},
+    //{'label': 'North', 'color': Colors.blue},
+    //{'label': 'Red Line/Arts Block', 'color': Colors.red},
+    //{'label': 'South', 'color': Colors.deepOrangeAccent},
+  //];
+
 
   String dropdownValue = 'Mansueto Library';
  
   @override
   Widget build(BuildContext context) {
-  final double screenWidth = MediaQuery.of(context).size.width;
-  final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
-  bool isDay = false;
-
-  return Scaffold(
-    appBar: AppBar(
-      title: GestureDetector(
-        onTap: _launchURL,
-        child: Container(
-          width: screenWidth * 0.9,
-          height: 400,
-          padding: const EdgeInsets.all(5), // Add padding if needed
-          child: Image.asset(
-            'assets/ShuttleMateLogo.png',
-            fit: BoxFit.contain, // Ensure the image fits within the container
+    return Scaffold(
+      appBar: AppBar(
+        title: GestureDetector(
+          onTap: _launchURL,
+          child: Container(
+            width: screenWidth * 0.9,
+            height: 400,
+            padding: const EdgeInsets.all(5), // Add padding if needed
+            child: Image.asset(
+              'assets/ShuttleMateLogo.png',
+              fit: BoxFit.contain, // Ensure the image fits within the container
+            ),
           ),
         ),
+        backgroundColor: isDay ? Color(0xFF800000) : Color(0xFF4C0202),
       ),
-      backgroundColor: Color(0xFF800000),
-    ),
-    body: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF800000), Color(0xFF4C0202)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomLeft,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF800000), Color(0xFF4C0202)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomLeft,
+          ),
         ),
-      ),
-      child: Column(
-        children: <Widget>[
+        child: Column(
+          children: <Widget>[
           // First section with Dropdown and Text
           SizedBox(
             height: screenHeight * 0.125,
@@ -213,10 +251,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
+                // Day/Night Toggle Switch
                 Column(
                   children: [
                     Text(
-                      "Daytime",
+                      isDay ? "Daytime" : "Nightride",
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: screenWidth * 0.05,
@@ -264,32 +303,93 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-          // GridView with buttons
+          // GridView with buttons   
           Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5, // 5 columns
-              ),
-              itemCount: buttonData.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.02), // Add margin between buttons
-                  child: Tooltip(
-                    message: '${buttonData[index]['label']}', // Display button index and label
-                    child: BorderToggleButton(
-                      label: buttonData[index]['label'],
-                      color: buttonData[index]['color'],
-                    ),
-                  ),
-                );
-              },
+  child: GridView.builder(
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 5, // 5 columns
+      crossAxisSpacing: 8.0,
+      mainAxisSpacing: 8.0,
+    ),
+    itemCount: currentRoutes.length,
+    itemBuilder: (context, index) {
+      final route = currentRoutes[index];
+      return GestureDetector(
+        onTap: () => _showRouteStops(route),
+        child: Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: route['color'], // Border color based on route
+              width: 3,
             ),
           ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.directions_bus, // Bus icon
+                size: 30, // Adjust the size of the icon
+                color: route['color'], // Icon color matching the route
+              ),
+              const SizedBox(height: 5), // Spacing between icon and text
+              Text(
+                route['label'],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: route['color'], // Text color matching the route
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+),
+
+
+
         ],
       ),
     ),
   );
 }
+
+//show stops method
+void _showRouteStops(Map<String, dynamic> route) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              route['label'],
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            ...route['stops'].map<Widget>((stop) {
+              return ListTile(
+                leading: Icon(Icons.place, color: route['color']),
+                title: Text(stop),
+              );
+            }).toList(),
+          ],
+        ),
+      );
+    },
+  );
+}
+
 }
 
 class DayNightSwitch extends StatefulWidget {
@@ -303,16 +403,14 @@ class DayNightSwitch extends StatefulWidget {
   final ValueChanged<bool> onChanged;
 
   @override
-  DayNightSwitchState createState() => DayNightSwitchState();
+  _DayNightSwitchState createState() => _DayNightSwitchState();
 }
 
-class DayNightSwitchState extends State<DayNightSwitch> {
+class _DayNightSwitchState extends State<DayNightSwitch> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        widget.onChanged(!widget.isDay);
-      },
+      onTap: () => widget.onChanged(!widget.isDay),
       child: Container(
         width: 60,
         height: 30,
@@ -334,9 +432,10 @@ class DayNightSwitchState extends State<DayNightSwitch> {
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
-                child: widget.isDay
-                    ? Icon(Icons.wb_sunny, color: Colors.yellow)
-                    : Icon(Icons.nights_stay, color: Colors.blueGrey),
+                child: Icon(
+                  widget.isDay ? Icons.wb_sunny : Icons.nights_stay,
+                  color: widget.isDay ? Colors.yellow : Colors.blueGrey,
+                ),
               ),
             ),
           ],
