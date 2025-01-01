@@ -216,7 +216,7 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
     'stops': [
       'International House',
       'Saieh Hall',
-      'Harper Memorial Library'
+      'Harper Memorial Library',
     ],
     'places': [
       ['Ratner', 'Not Ratner', '? Oh ratner'],
@@ -229,6 +229,7 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
     ],
     'color': Colors.green,
     'abbreviation': 'EAST',
+    'info': 'This route is pretty good stuff. But what is stuff? Who defines what is and what is not, what to see?',
     'times': 'Mon-Fri, 6:30am-9pm, every 10-20 min'
   },
   {
@@ -271,6 +272,7 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
     ],
     'color': Colors.purple,
     'abbreviation': 'RE',
+    'info': 'This route is pretty good stuff. But what is stuff? Who defines what is and what is not, what to see?',
     'times': 'Mon-Fri, 6:30am-9pm, every 10-20 min'
   },
 ];

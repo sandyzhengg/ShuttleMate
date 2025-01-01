@@ -88,8 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: GestureDetector(
           onTap: _launchURL,
           child: Container(
-            width: screenWidth * 0.9,
-            height: screenHeight * 0.05,
+            width: screenWidth * 1,
             padding: const EdgeInsets.all(5), // Add padding if needed
             child: Image.asset(
               'assets/ShuttleMateLogo.png',

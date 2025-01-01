@@ -1,6 +1,6 @@
-# shuttlemate_app
+# shuttlemate
 
-A new Flutter project.
+Your (personal) companion for UChicago shuttles
 
 ## Getting Started
 
