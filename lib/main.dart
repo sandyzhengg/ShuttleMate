@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     value,
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
-                                      fontSize: 7,
+                                      fontSize: screenWidth * 0.035 * ((100 - value.length) / 100),
                                       color: Colors.black,
                                     ),
                                   ),

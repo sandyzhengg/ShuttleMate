@@ -218,6 +218,15 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
       'Saieh Hall',
       'Harper Memorial Library'
     ],
+    'places': [
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+      ['Ratner', 'Not Ratner', '? Oh ratner'],
+    ],
     'color': Colors.green,
     'abbreviation': 'EAST',
     'times': 'Mon-Fri, 6:30am-9pm, every 10-20 min'

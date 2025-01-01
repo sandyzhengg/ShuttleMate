@@ -35,13 +35,13 @@ class DayNightSwitchState extends State<DayNightSwitch> {
         child: Stack(
           children: [
             AnimatedPositioned(
-              duration: Duration(milliseconds: 300),
+              duration: Duration(milliseconds: 250),
               curve: Curves.easeIn,
               left: widget.isDay ? 0 : screenWidth * 0.1,
               right: widget.isDay ? screenWidth * 0.1 : 0,
               child: Container(
-                width: screenWidth * 0.079,
-                height: screenWidth * 0.079,
+                width: screenWidth * 0.08,
+                height: screenWidth * 0.08,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: widget.isDay ? Color(0xFFc1e7e8): Color(0xFF252e2e),
