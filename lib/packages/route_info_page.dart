@@ -47,7 +47,7 @@ class RouteInfoPage extends StatelessWidget {
                 children: [
                   SizedBox(width: screenWidth * 0.05),
                     Expanded(
-                      flex: 2, // 1 part of the space
+                      flex: 1, // 1 part of the space
                       child: Container(
                       height: screenWidth * 0.15,
                       decoration: BoxDecoration(
@@ -77,12 +77,12 @@ class RouteInfoPage extends StatelessWidget {
                   ),
                   SizedBox(width: screenWidth * 0.05),
                   Expanded(
-                    flex: 6, // 2 parts of the space
+                    flex: 3, // 2 parts of the space
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'This route is pretty good stuff. But what is stuff? Who defines what is and what is not, what to see?',
+                          routePage['info'],
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: screenWidth * 0.05,
@@ -99,6 +99,64 @@ class RouteInfoPage extends StatelessWidget {
                   width: screenWidth,
                   height: screenWidth * 0.05, // Set the desired height for the rectangle
                   color: Colors.white,
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: screenWidth * 0.475, // Center the vertical line
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: screenWidth * 0.05,
+                        color: Colors.white,
+                      ),
+                    ),
+                    ListView.builder(
+                      itemCount: routePage['stops'].length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(width: screenWidth * 0.05),
+                            Container(
+                              width: screenWidth * 0.4, // Set the desired width for the text box
+                              height: screenWidth * 0.25,
+                              constraints: BoxConstraints(
+                                maxWidth: screenWidth * 0.4, // Limit the maximum width
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  routePage['stops'][index],
+                                  style: TextStyle(
+                                    fontFamily: 'DelaGothicOne',
+                                    fontSize: screenWidth * 0.04,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white, // Text color matching the route
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: screenWidth * 0.1,
+                              height: screenWidth * 0.1,
+                              decoration: BoxDecoration(
+                                color: routePage['color'],
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 4,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.1),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
