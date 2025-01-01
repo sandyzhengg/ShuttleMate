@@ -231,6 +231,13 @@ class _MyHomePageState extends State<MyHomePage> {
     itemCount: currentRoutes.length,
     itemBuilder: (context, index) {
       final route = currentRoutes[index];
+      bool containsDropdownValue = false;
+      for (var subArray in route['places']) {
+        if (subArray.contains(dropdownValue)) {
+          containsDropdownValue = true;
+          break;
+        }
+      }
       return GestureDetector(
         onTap: () => Navigator.push(
                     context,
@@ -244,12 +251,22 @@ class _MyHomePageState extends State<MyHomePage> {
           width: screenWidth * 0.45,
           height: screenWidth * 0.45,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: containsDropdownValue ? route['color'] : Colors.white,
             shape: BoxShape.circle,
             border: Border.all(
-              color: route['color'], // Border color based on route
+              color: containsDropdownValue ? Colors.white : route['color'], // Border color based on route
               width: screenWidth * 0.01,
             ),
+            boxShadow: containsDropdownValue
+                ? [
+                    BoxShadow(
+                      color: route['color'].withOpacity(0.75),
+                      spreadRadius: 10,
+                      blurRadius: 30,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ]
+                : [],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -257,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Icon(
                 Icons.directions_bus, // Bus icon
                 size: screenWidth * 0.05, // Adjust the size of the icon
-                color: route['color'], // Icon color matching the route
+                color: containsDropdownValue ? Colors.white : route['color'], // Icon color matching the route
               ),
               Text(
                 route['label'],

@@ -13,6 +13,11 @@ class RouteInfoPage extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
+    List<String> placesList = [];
+    for (var subArray in routePage['places']) {
+      placesList.add(subArray.join(' '));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,7 +71,7 @@ class RouteInfoPage extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'DelaGothicOne',
-                              fontSize: screenWidth * 0.05,
+                              fontSize: screenWidth * 0.15 / routePage['abbreviation'].length,
                               fontWeight: FontWeight.bold,
                               color: Colors.white, // Text color matching the route
                             ),
@@ -146,11 +151,30 @@ class RouteInfoPage extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.white,
-                                  width: 4,
+                                  width: screenWidth * 0.02,
                                 ),
                               ),
                             ),
-                            SizedBox(width: screenWidth * 0.1),
+                            SizedBox(width: screenWidth * 0.05),
+                            Container(
+                              width: screenWidth * 0.4, // Set the desired width for the text box
+                              height: screenWidth * 0.25,
+                              constraints: BoxConstraints(
+                                maxWidth: screenWidth * 0.4, // Limit the maximum width
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  routePage['places'][index].map((place) => '* $place').join('\n'),
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: screenWidth * 0.04,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white, // Text color matching the route
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         );
                       },
