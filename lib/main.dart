@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import "packages/dropdown_options.dart";
 import "packages/day_night_toggle.dart";
 import 'packages/route_info_page.dart';
+import 'packages/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,24 +36,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //Daytime and Nightime route lists
-  final List<Map<String, dynamic>> daytimeRoutes = [
-    {'label': 'Friend Center & Metra', 'stops': ['Bartlett Dining Commons', 'Campus North Residential Commons', 'Ratner', 'Max Palevsky Residential Commons', 'Regenstein Library/Mansueto'], 'color': Colors.blue},
-    {'label': 'Drexel', 'stops': ['Crown Family School of Social Work, Policy, and Practice', 'Henry Crown', 'Snell-Hitchcock Hall', 'Woodlawn Residential Hall', 'Renee Granville-Grossman Residential Commons'],'color': Colors.purple},
-    {'label': 'Apostolic/Drexel', 'stops': ['Apostolic Church', 'Logan Center for the Arts', 'Rockefeller Memorial Chapel', 'Stagg Field', 'Saieh Hall', 'William Eckhardt Research Center'],'color': Colors.orange},
-    {'label': 'Apostolic', 'stops': ['Smart Museum of Art', 'Stony Island Metra Stop', 'Midway Plaisance'],'color': Colors.pink},
-    {'label': '53rd Street Express', 'stops': ['Harper Court', 'Shops on 53rd Street', 'Stony Island Metra Stop'],'color': Colors.green},
-    {'label': 'Midway Metra', 'stops': ['Midway Plaisance', 'International House', 'Charles M. Harper Center (Booth School of Business)', 'Oriental Institute Museum'],'color': Colors.black},
-    {'label': 'RedLine/Arts Block', 'stops': ['Garfield Red Line', 'Garfield Green Line', 'Arts Block', 'Washington Park', 'Logan Center for the Arts', 'KPTC'],'color':Colors.red},
-  ];
-
-  final List<Map<String, dynamic>> nighttimeRoutes = [
-    {'label': 'North Route', 'stops': ['Ratner', 'Campus North Residential Commons', 'Max Palevsky Residential Commons', 'Bartlett Dining Commons', 'Regenstein Library/Mansueto', 'Snell-Hitchcock Hall', 'Stuart Hall'],'color': Colors.lightBlue},
-    {'label': 'South Route', 'stops': ['Woodlawn Residential Commons', 'Renee Granville-Grossman Residential Commons', 'Logan Center for the Arts', 'Rockefeller Memorial Chapel', 'Midway Plaisance'],'color': Colors.red},
-    {'label': 'East Route', 'stops': ['International House', 'Saieh Hall', 'Harper Memorial Library'],'color': Colors.green},
-    {'label': 'Central Route', 'stops': ['Charles M. Harper Center (Booth School of Business)', 'KPTC', 'Eckhardt Research Center', 'Oriental Institute Museum'],'color': Colors.orange},
-    {'label': 'Regents Express', 'stops': ['University of Chicago Medicine', 'Gleacher Center', 'Stony Island Metra Stop'],'color': Colors.purple},
-  ];
   late final WebViewController controller;
 
   bool isDay = true;
@@ -71,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  
   Future<void> _launchURL() async {
     final Uri url = Uri.parse('https://chicago.passiogo.com/');
     if (await canLaunchUrl(url)) {
@@ -91,9 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
     //{'label': 'South', 'color': Colors.deepOrangeAccent},
   //];
 
-
   String dropdownValue = 'Mansueto Library';
- 
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
