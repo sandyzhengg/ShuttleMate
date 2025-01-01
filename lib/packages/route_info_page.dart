@@ -20,6 +20,7 @@ class RouteInfoPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: screenHeight * 0.05,
         title: Text(
               routePage['label'],
               style: TextStyle(

@@ -84,11 +84,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: screenHeight * 0.05,
         title: GestureDetector(
           onTap: _launchURL,
           child: Container(
             width: screenWidth * 0.9,
-            height: 400,
+            height: screenHeight * 0.05,
             padding: const EdgeInsets.all(5), // Add padding if needed
             child: Image.asset(
               'assets/ShuttleMateLogo.png',
@@ -155,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     value,
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
-                                      fontSize: screenWidth * 0.035 * ((100 - value.length) / 100),
+                                      fontSize: screenWidth * 0.035 * ((70 - value.length) / 70),
                                       color: Colors.black,
                                     ),
                                   ),
