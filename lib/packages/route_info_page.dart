@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'routes.dart';
 
 class RouteInfoPage extends StatelessWidget {
   final Map<String, dynamic> routePage;
@@ -12,11 +13,6 @@ class RouteInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
-
-    List<String> placesList = [];
-    for (var subArray in routePage['places']) {
-      placesList.add(subArray.join(' '));
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -166,7 +162,7 @@ class RouteInfoPage extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  routePage['places'][index].map((place) => '* $place').join('\n'),
+                                  stopPlaces[routePage['stops'][index]].map((place) => '* $place').join('\n'),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: screenWidth * 0.03,

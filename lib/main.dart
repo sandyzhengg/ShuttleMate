@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import "packages/dropdown_options.dart";
 import "packages/day_night_toggle.dart";
 import 'packages/route_info_page.dart';
 import 'packages/routes.dart';
@@ -69,18 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  //Replaced with NightTime and DayTime Lists
-  //final List<Map<String, dynamic>> buttonData = [
-    //{'label': 'Central', 'color': Colors.orange},
-    //{'label': 'East', 'color': Colors.green},
-    //{'label': 'Friend Center/Metra', 'color': Colors.brown},
-    //{'label': 'Gleacher Express', 'color': Colors.black},
-    //{'label': 'North', 'color': Colors.blue},
-    //{'label': 'Red Line/Arts Block', 'color': Colors.red},
-    //{'label': 'South', 'color': Colors.deepOrangeAccent},
-  //];
-
   String dropdownValue = 'Mansueto Library';
+
+  final List<dynamic> dropdownOptions = stopPlaces.values.expand((places) => places).toSet().toList();
 
   @override
   Widget build(BuildContext context) {
@@ -172,20 +162,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               dropdownValue = newValue!;
                             });
                           },
-                          items: dropdownOptions.map<DropdownMenuItem<String>>((String value) {
+                          items: dropdownOptions.map<DropdownMenuItem<String>>((dynamic value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    value,
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: screenWidth * 0.035 * ((70 - value.length) / 70),
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: screenWidth * 0.035 * ((100 - value.length) / 100),
+                                  color: Colors.black,
+                                ),
                               ),
                             );
                           }).toList(),
@@ -237,8 +223,8 @@ class _MyHomePageState extends State<MyHomePage> {
     itemBuilder: (context, index) {
       final route = currentRoutes[index];
       int containsDropdownValue = -1;
-      for (int i = 0; i < route['places'].length; i++) {
-        if (route['places'][i].contains(dropdownValue)) {
+      for (int i = 0; i < route['stops'].length; i++) {
+        if (stopPlaces[route['stops'][i]].contains(dropdownValue)) {
           containsDropdownValue = i;
           break;
         }
