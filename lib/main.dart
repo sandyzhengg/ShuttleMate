@@ -119,10 +119,31 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                // Day/Night Toggle Switch
                 Column(
                   children: [
                     Text(
-                      "Going Somewhere?",
+                      isDay ? "Daytime Routes" : "Nightride Routes",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: screenWidth * 0.05,
+                        color: isDay ?Colors.white : Colors.yellowAccent,
+                      ),
+                    ),
+                    SizedBox(height: screenWidth * 0.025), // Add padding between the Text and ToggleButtons
+                    DayNightSwitch(
+                      isDay: isDay,
+                      onChanged: (value) {
+                          setState(() {
+                            isDay = value;
+                          });
+                      }),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "With Stops Nearby",
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: screenWidth * 0.05,
@@ -173,27 +194,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                // Day/Night Toggle Switch
-                Column(
-                  children: [
-                    Text(
-                      isDay ? "Daytime" : "Nightride",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: screenWidth * 0.05,
-                        color: isDay ?Colors.white : Colors.yellowAccent,
-                      ),
-                    ),
-                    SizedBox(height: screenWidth * 0.025), // Add padding between the Text and ToggleButtons
-                    DayNightSwitch(
-                      isDay: isDay,
-                      onChanged: (value) {
-                          setState(() {
-                            isDay = value;
-                          });
-                      }),
-                  ],
-                ),
               ],
             ),
           ),
@@ -217,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(
             height: screenHeight * 0.05,
             child: Text(
-              "Shuttle Stops",
+              "Shuttle Routes",
               style: TextStyle(
                 fontFamily: 'DelaGothicOne',
                 fontSize: screenWidth * 0.05,
@@ -236,10 +236,10 @@ class _MyHomePageState extends State<MyHomePage> {
     itemCount: currentRoutes.length,
     itemBuilder: (context, index) {
       final route = currentRoutes[index];
-      bool containsDropdownValue = false;
-      for (var subArray in route['places']) {
-        if (subArray.contains(dropdownValue)) {
-          containsDropdownValue = true;
+      int containsDropdownValue = -1;
+      for (int i = 0; i < route['places'].length; i++) {
+        if (route['places'][i].contains(dropdownValue)) {
+          containsDropdownValue = i;
           break;
         }
       }
@@ -256,13 +256,13 @@ class _MyHomePageState extends State<MyHomePage> {
           width: screenWidth * 0.45,
           height: screenWidth * 0.45,
           decoration: BoxDecoration(
-            color: containsDropdownValue ? route['color'] : Colors.white,
+            color: containsDropdownValue > 0 ? route['color'] : Colors.white,
             shape: BoxShape.circle,
             border: Border.all(
-              color: containsDropdownValue ? Colors.white : route['color'], // Border color based on route
+              color: containsDropdownValue > 0 ? Colors.white : route['color'], // Border color based on route
               width: screenWidth * 0.01,
             ),
-            boxShadow: containsDropdownValue
+            boxShadow: containsDropdownValue > 0
                 ? [
                     BoxShadow(
                       color: route['color'].withOpacity(0.75),
@@ -276,18 +276,18 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              (containsDropdownValue > 0 ? Container() : Icon(
                 Icons.directions_bus, // Bus icon
                 size: screenWidth * 0.05, // Adjust the size of the icon
-                color: containsDropdownValue ? Colors.white : route['color'], // Icon color matching the route
-              ),
+                color: containsDropdownValue > 0 ? Colors.white : route['color'], // Icon color matching the route
+              )),
               Text(
-                route['label'],
+                containsDropdownValue > 0 ? route['stops'][containsDropdownValue].toUpperCase() : route['label'],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: screenWidth * 0.025 * ((70 - route['label'].length) / 70),
+                  fontSize: containsDropdownValue > 0 ? screenWidth * 0.04 * ((25 - route['stops'][containsDropdownValue].length) / 25) : screenWidth * 0.025 * ((70 - route['label'].length) / 70),
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Text color matching the route
+                  color: containsDropdownValue > 0 ? Colors.white : Colors.black, // Text color matching the route
                 ),
               ),
             ],
