@@ -44,7 +44,7 @@ class RouteInfoPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Poppins',
-                  fontSize: screenWidth * 0.05,
+                  fontSize: screenWidth * 0.05  * ((300 - routePage['times'].length) / 300),
                   color: Colors.white, // Text color matching the route
                 ),
               ),
@@ -110,11 +110,11 @@ class RouteInfoPage extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned(
-                      left: screenWidth * 0.475, // Center the vertical line
+                      left: screenWidth * 0.4825, // Center the vertical line
                       top: 0,
                       bottom: 0,
                       child: Container(
-                        width: screenWidth * 0.05,
+                        width: screenWidth * 0.035,
                         color: Colors.white,
                       ),
                     ),
@@ -169,7 +169,7 @@ class RouteInfoPage extends StatelessWidget {
                                   routePage['places'][index].map((place) => '* $place').join('\n'),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: screenWidth * 0.04,
+                                    fontSize: screenWidth * 0.03,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white, // Text color matching the route
                                   ),

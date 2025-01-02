@@ -285,9 +285,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 containsDropdownValue > 0 ? route['stops'][containsDropdownValue].toUpperCase() : route['label'],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: containsDropdownValue > 0 ? screenWidth * 0.04 * ((25 - route['stops'][containsDropdownValue].length) / 25) : screenWidth * 0.025 * ((70 - route['label'].length) / 70),
+                  fontSize: containsDropdownValue > 0 ? screenWidth * 0.04 * ((50 - route['stops'][containsDropdownValue].length) / 50) : screenWidth * 0.03 * ((50 - route['label'].length) / 50),
                   fontWeight: FontWeight.bold,
-                  color: containsDropdownValue > 0 ? Colors.white : Colors.black, // Text color matching the route
+                  color: Colors.black, // Text color matching the route
                 ),
               ),
             ],
