@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String dropdownValue = 'Mansueto Library';
 
-  final List<dynamic> dropdownOptions = stopPlaces.values.expand((places) => places).toSet().toList();
+  final List<dynamic> dropdownOptions = stopPlaces.values.expand((places) => places).toSet().toList()..sort();
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 containsDropdownValue > 0 ? route['stops'][containsDropdownValue].toUpperCase() : route['label'],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: containsDropdownValue > 0 ? screenWidth * 0.04 * ((50 - route['stops'][containsDropdownValue].length) / 50) : screenWidth * 0.03 * ((50 - route['label'].length) / 50),
+                  fontSize: containsDropdownValue > 0 ? screenWidth * 0.035 * ((50 - route['stops'][containsDropdownValue].length) / 50) : screenWidth * 0.03 * ((50 - route['label'].length) / 50),
                   fontWeight: FontWeight.bold,
                   color: Colors.black, // Text color matching the route
                 ),
