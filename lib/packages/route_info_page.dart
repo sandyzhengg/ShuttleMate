@@ -165,7 +165,7 @@ class RouteInfoPage extends StatelessWidget {
                                   stopPlaces[routePage['stops'][index]].map((place) => '* $place').join('\n'),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: screenWidth * 0.03,
+                                    fontSize: screenWidth * 0.025,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white, // Text color matching the route
                                   ),

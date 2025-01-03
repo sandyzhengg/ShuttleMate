@@ -229,6 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         }
       }
+
       return GestureDetector(
         onTap: () => Navigator.push(
                     context,
@@ -242,13 +243,13 @@ class _MyHomePageState extends State<MyHomePage> {
           width: screenWidth * 0.45,
           height: screenWidth * 0.45,
           decoration: BoxDecoration(
-            color: containsDropdownValue > 0 ? route['color'] : Colors.white,
+            color: containsDropdownValue > -1 ? route['color'] : Colors.white,
             shape: BoxShape.circle,
             border: Border.all(
-              color: containsDropdownValue > 0 ? Colors.white : route['color'], // Border color based on route
+              color: containsDropdownValue > -1 ? Colors.white : route['color'], // Border color based on route
               width: screenWidth * 0.01,
             ),
-            boxShadow: containsDropdownValue > 0
+            boxShadow: containsDropdownValue > -1
                 ? [
                     BoxShadow(
                       color: route['color'].withOpacity(0.75),
@@ -262,16 +263,16 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              (containsDropdownValue > 0 ? Container() : Icon(
+              (containsDropdownValue > -1 ? Container() : Icon(
                 Icons.directions_bus, // Bus icon
                 size: screenWidth * 0.05, // Adjust the size of the icon
-                color: containsDropdownValue > 0 ? Colors.white : route['color'], // Icon color matching the route
+                color: containsDropdownValue > -1 ? Colors.white : route['color'], // Icon color matching the route
               )),
               Text(
-                containsDropdownValue > 0 ? route['stops'][containsDropdownValue].toUpperCase() : route['label'],
+                containsDropdownValue > -1 ? route['stops'][containsDropdownValue] : (route['special'] ?? route['label']),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: containsDropdownValue > 0 ? screenWidth * 0.035 * ((50 - route['stops'][containsDropdownValue].length) / 50) : screenWidth * 0.03 * ((50 - route['label'].length) / 50),
+                  fontSize: containsDropdownValue > -1 ? screenWidth * 0.035 * ((65 - route['stops'][containsDropdownValue].length) / 65) : screenWidth * 0.03 * ((45 - route['label'].length) / 45),
                   fontWeight: FontWeight.bold,
                   color: Colors.black, // Text color matching the route
                 ),

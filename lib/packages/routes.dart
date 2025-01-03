@@ -7,7 +7,7 @@ final Map<String, dynamic> stopPlaces = {
     'Ellis & 53rd St.': [],
     'Ellis Garage & Ratner Athletic (West)': ['Ratner', 'Smart Museum of Art'],
     'Ellis Ave & 57th St': ['Mansueto Library', "Eckhardt", "Kersten Physics Teaching Center", "Searle Chemical Labratory"],
-    'Levi Hall (W)': ['Henry Hinds Laboratory for Geophysical Sciences', 'Bookstore', 'Edward H. Levi Hall'],
+    'Levi Hall (W)': ['Henry Hinds Laboratory for Geophysical Sciences', 'University of Chicago Bookstore ', 'Edward H. Levi Hall'],
     'Goldblatt Pavilion': ['Student Wellness Center', "Department of Medicine"],
     'Logan Center': ['Logan Center for the Arts', 'Researching Computing Center'],
     '60th St. & Ellis (SE Corner)':  ['Burton - Judson Courts', 'Crown Family School of Social Work, Policy, and Practice', 'Edelstone Center', 'Renee Granville Grossman Residential Commons', "Cathey Dining Commons"],
@@ -25,13 +25,13 @@ final Map<String, dynamic> stopPlaces = {
     'Drexel Garage': ['Research Computing Center', 'The University of Chicago Human Resources Department', 'University of Chicago: Department of Safety and Security'],
     'Apostolic Lot': [],
     'Kenwood & 63rd': [],
-    'Reynolds Club': ['Reynolds Club', "Mitchell"],
+    'Reynolds Club': ['Reynolds Club', 'Hutchinson Commons', 'Bartlett Dining Commons'],
     '57th St & Metra (SB)': ['57th St. Metra'],
     '59th St & Metra': ['59th St. Metra', 'International House'],
     'International House': ['International House'],
     'Keller Center WB': ['Keller Center', 'Midway Plaisance Park'],
     'Burton-Judson Courts (NE Corner)': [],
-    'Levi Hall (E)': ['Henry Hinds Laboratory for Geophysical Sciences', 'Bookstore', 'Edward H. Levi Hall'],
+    'Levi Hall (E)': ['Henry Hinds Laboratory for Geophysical Sciences', 'University of Chicago Bookstore ', 'Edward H. Levi Hall'],
     'Max Palevsky Residential Commons (NE Corner)': ["Max Palevsky Residential Commons"],
     'Ellis Garage & Ratner Athletic Center (East)': ['Ratner', 'Smart Museum of Art'],
     '55th Street & University': ['North Residential Commons', 'Baker Dining Commons', "Henry Crown Field House"],
@@ -73,7 +73,7 @@ final Map<String, dynamic> stopPlaces = {
     'E 56th St & S Hyde Park Blvd (SW Corner)': ['Museum of Science and Industry'],
     'Shoreland Building': ['Promontory Point'],
     'Logan Center for Arts': ['Logan Center for the Arts', 'Researching Computing Center'],
-    'Institute for Study of Ancient Cultures': ['Henry Hinds Laboratory for Geophysical Sciences', 'Bookstore', 'Edward H. Levi Hall'],
+    'Institute for Study of Ancient Cultures': ['Henry Hinds Laboratory for Geophysical Sciences', 'University of Chicago Bookstore ', 'Edward H. Levi Hall'],
     'Ellis/57th': ['Mansueto Library', "Eckhardt", "Kersten Physics Teaching Center", "Searle Chemical Labratory"],
     'Smart Museum of Art': ['Ratner', 'Smart Museum of Art'],
     'Garfield Green Line Station': ['Garfield Green Line'],
@@ -91,11 +91,127 @@ final Map<String, dynamic> stopPlaces = {
     'South Campus Resident Hall': ['Burton - Judson Courts', 'Crown Family School of Social Work, Policy, and Practice', 'Edelstone Center', 'Renee Granville Grossman Residential Commons', "Cathey Dining Commons"],
     '61st Street & University': ['University of Chicago Law School', 'Woodlawn Residential Commons', 'Woodlawn Dining Commons'],
     '61st St & Woodlawn Ave': ['Institute for Mathematical and Statistical Innovation', 'Harris School of Public Policy', 'Woodlawn Residential Commons', 'Woodlawn Dining Commons'],
-    'Roosevelt CTA Station': [],
+    'Roosevelt CTA Station': ['Roosevelt Red/Green/Orange Line'],
 };
 
 //Daytime and Nightime route lists
 final List<Map<String, dynamic>> daytimeRoutes = [
+  {
+    'label': 'Red Line/Arts Block',
+    'stops': [
+      'Logan Center for Arts',
+      'Institute for Study of Ancient Cultures',
+      'Ellis/57th',
+      'Smart Museum of Art',
+      'Garfield Green Line Station',
+      'Garfield & Wabash (WB)',
+      'Garfield Red Line Station (WB)',
+      'Garfield Red Line Station (EB)',
+      'Garfield & Wabash (EB)',
+      'Washington Park Arts Incubator',
+      'Midway Plaisance & Cottage Grove',
+    ],
+    'color': Colors.red,
+    'abbreviation': 'RED',
+    'info': 'For the Garfield CTA enjoyers running through the Arts Block (Riders can also VIA back to campus)',
+    'times': 'Mon-Fri, 6:30am-9pm, every 10-20 min',
+  },
+  {
+    'label': 'Friend Center/Metra',
+    'stops': [
+      'Goldblatt Pavilion',
+      'Wyler Pavilion',
+      'Bernard Mitchell Hospital',
+      '58th Street & Drexel',
+      "Comer Children's Hospital",
+      'S Drexel Ave & 57th St',
+      'Ellis Garage & Ratner Athletic Center (East)',
+      'Ronald McDonald House & Friend Center',
+      '55th Street & University',
+      'Hyde Park Shopping Center (S)',
+      '57th Street Metra Station (E)',
+      '59th St & Metra',
+    ],
+    'color': Colors.brown,
+    'abbreviation': 'FCM',
+    'info': 'Goes through edges of campus, the shopping center, and Metra stations',
+    'times': 'Mon-Fri, 5am-9pm, every 30 min',
+  },
+  {
+    'label': 'Downtown Campus Connector',
+    'stops': [
+    'Rockefeller Chapel',
+    'Goldblatt Pavilion',
+    '55th Street & University',
+    'S Lake Park & E 53rd St',
+    'S Lake Park Ave & E Hyde Park Blvd',
+    'S Michigan Ave/Roosevelt',
+    'E Randolph St & S Michigan Ave',
+    'Gleacher Center',
+    'UCHICAGO Medicine - River East',
+    'N (Upper) Wacker Dr & W Madison St',
+    'S (Upper) Wacker Dr & W Adams St',
+    'UCHICAGO Medicine - South Loop',
+    'Roosevelt Station',
+    ],
+    'color': const Color.fromARGB(255, 13, 97, 16),
+    'abbreviation': 'DCC',
+    'info': 'Shuttle for downtown Gleacher Center and UChicago Medicine clinics with limited main campus stops',
+    'times': 'Mon-Fri, 6:30am-10pm, every 20 minutes',
+  },
+  {
+    'label': 'Apostolic/Drexel',
+    'stops': [
+    'Goldblatt Pavilion',
+    'Wyler Pavilion',
+    'Bernard Mitchell Hospital',
+    '58th Street & Drexel',
+    "Comer Children's Hospital",
+    '57th Street & Drexel (NB)',
+    'Levi Hall (W)',
+    'Drexel Garage',
+    'Apostolic Lot',
+    'Kenwood & 63rd',
+    ],
+    'color': const Color.fromARGB(255, 230, 120, 70),
+    'abbreviation': 'AP/DX',
+    'info': 'Good for the University hospital/staff and places of worship',
+    'times': 'Mon-Fri, 10am-12:30am, 10am-3pm every 15 min, 3pm-12:30am every 10 min',
+  },
+  {
+    'label': 'Apstolic Route',
+    'stops': [
+      'Kenwood & 63rd',
+      'Goldblatt Pavilion',
+      'Wyler Pavilion',
+      'Bernard Mitchell Hospital',
+      '58th Street & Drexel',
+      "Comer Children's Hospital",
+      '57th Street & Drexel (NB)',
+      'Levi Hall (W)',
+      'Apostolic Lot'
+    ],
+    'color': Colors.blue,
+    'abbreviation': 'AP',
+    'info': 'Early morning route for the University hospital/staff and places of worship. Use AP/DX after 10am',
+    'times': 'Mon-Fri, 5am-10am, every 10 min',
+  },
+  {
+    'label': 'Drexel Route',
+    'stops': [
+      'Drexel Garage',
+      'Goldblatt Pavilion',
+      'Wyler Pavilion',
+      'Bernard Mitchell Hospital',
+      '58th Street & Drexel',
+      "Comer Children's Hospital",
+      '57th Street & Drexel (NB)'
+    ],
+    'color': Colors.deepPurpleAccent,
+    'abbreviation': 'DX',
+    'info': 'Early morning route for the University hospital/staff and places of worship. Use AP/DX after 10am',
+    'times': 'Mon-Fri, 5am-10am, every 10 min',
+  },
   {
     'label': '53RD Street Express', 
     'stops': [
@@ -122,68 +238,6 @@ final List<Map<String, dynamic>> daytimeRoutes = [
     'times': 'Mon-Fri, 7am-6pm, 7am-8am every 30 min, 8am-10:30am every 15 minutes, 10:30am-6pm every 30 min'
   },
   {
-    'label': 'Apostolic/Drexel',
-    'stops': [
-    'Goldblatt Pavilion',
-    'Wyler Pavilion',
-    'Bernard Mitchell Hospital',
-    '58th Street & Drexel',
-    "Comer Children's Hospital",
-    '57th Street & Drexel (NB)',
-    'Levi Hall (W)',
-    'Drexel Garage',
-    'Apostolic Lot',
-    'Kenwood & 63rd',
-    ],
-    'color': Colors.orange,
-    'abbreviation': 'AP/DX',
-    'info': 'Good for the University hospital and places of worship',
-    'times': 'Mon-Fri, 10am-12:30am, 10am-3pm every 15 min, 3pm-12:30am every 10 min'
-  },
-  {
-    'label': 'Downtown Campus Connector',
-    'stops': [
-    'Rockefeller Chapel',
-    'Goldblatt Pavilion',
-    '55th Street & University',
-    'S Lake Park & E 53rd St',
-    'S Lake Park Ave & E Hyde Park Blvd',
-    'S Michigan Ave/Roosevelt',
-    'E Randolph St & S Michigan Ave',
-    'Gleacher Center',
-    'UCHICAGO Medicine - River East',
-    'N (Upper) Wacker Dr & W Madison St',
-    'S (Upper) Wacker Dr & W Adams St',
-    'UCHICAGO Medicine - South Loop',
-    'Roosevelt Station',
-    ],
-    'color': const Color.fromARGB(255, 13, 97, 16),
-    'abbreviation': 'DCC',
-    'info': 'Shuttle for downtown Gleacher Center and UChicago Medicine clinics with limited main campus stops',
-    'times': 'Mon-Fri, 6:30am-10pm, every 20 minutes'
-  },
-  {
-    'label': 'Friend Center/Metra',
-    'stops': [
-      'Goldblatt Pavilion',
-      'Wyler Pavilion',
-      'Bernard Mitchell Hospital',
-      '58th Street & Drexel',
-      "Comer Children's Hospital",
-      'S Drexel Ave & 57th St',
-      'Ellis Garage & Ratner Athletic Center (East)',
-      'Ronald McDonald House & Friend Center',
-      '55th Street & University',
-      'Hyde Park Shopping Center (S)',
-      '57th Street Metra Station (E)',
-      '59th St & Metra',
-    ],
-    'color': Colors.brown,
-    'abbreviation': 'FCM',
-    'info': 'Goes through edges of campus, the shopping center, and Metra stations',
-    'times': 'Mon-Fri, 7am-6pm, 7am-8am every 30 min, 8am-10:30am every 15 minutes, 10:30am-6pm every 30 min'
-  },
-  {
     'label': 'Midway Metra',
     'stops': [
         '57th St & Metra (SB)',
@@ -206,8 +260,11 @@ final List<Map<String, dynamic>> daytimeRoutes = [
     'abbreviation': 'MM',
     'info': 'Midway route that only operates during morning and evening rush. Best for Metra commuters',
     'times': 'Mon-Fri, 5:40am-9:40am, 3:30p-6:40pm'
-  },
-  {
+  }
+];
+
+final List<Map<String, dynamic>> nighttimeRoutes = [
+    {
     'label': 'Red Line/Arts Block',
     'stops': [
       'Logan Center for Arts',
@@ -225,11 +282,74 @@ final List<Map<String, dynamic>> daytimeRoutes = [
     'color': Colors.red,
     'abbreviation': 'RED',
     'info': 'For the Garfield CTA enjoyers running through the Arts Block (Riders can also VIA back to campus)',
-    'times': 'Mon-Fri, 6:30am-9pm, every 10-20 min'
+    'times': 'Mon-Fri, 6:30am-9pm, every 10-20 min',
+    'special': 'RED\nUntil 9pm',
   },
-];
-
-final List<Map<String, dynamic>> nighttimeRoutes = [
+  {
+    'label': 'Friend Center/Metra',
+    'stops': [
+      'Goldblatt Pavilion',
+      'Wyler Pavilion',
+      'Bernard Mitchell Hospital',
+      '58th Street & Drexel',
+      "Comer Children's Hospital",
+      'S Drexel Ave & 57th St',
+      'Ellis Garage & Ratner Athletic Center (East)',
+      'Ronald McDonald House & Friend Center',
+      '55th Street & University',
+      'Hyde Park Shopping Center (S)',
+      '57th Street Metra Station (E)',
+      '59th St & Metra',
+    ],
+    'color': Colors.brown,
+    'abbreviation': 'FCM',
+    'info': 'Goes through edges of campus, the shopping center, and Metra stations',
+    'times': 'Mon-Fri, 5am-9pm, every 30 min',
+    'special': 'FCM\nUntil 9pm',
+  },
+  {
+    'label': 'Downtown Campus Connector',
+    'stops': [
+    'Rockefeller Chapel',
+    'Goldblatt Pavilion',
+    '55th Street & University',
+    'S Lake Park & E 53rd St',
+    'S Lake Park Ave & E Hyde Park Blvd',
+    'S Michigan Ave/Roosevelt',
+    'E Randolph St & S Michigan Ave',
+    'Gleacher Center',
+    'UCHICAGO Medicine - River East',
+    'N (Upper) Wacker Dr & W Madison St',
+    'S (Upper) Wacker Dr & W Adams St',
+    'UCHICAGO Medicine - South Loop',
+    'Roosevelt Station',
+    ],
+    'color': const Color.fromARGB(255, 13, 97, 16),
+    'abbreviation': 'DCC',
+    'info': 'Shuttle for downtown Gleacher Center and UChicago Medicine clinics with limited main campus stops',
+    'times': 'Mon-Fri, 6:30am-10pm, every 20 minutes',
+    'special': 'DCC\nUntil 10pm',
+  },
+  {
+    'label': 'Apostolic/Drexel',
+    'stops': [
+    'Goldblatt Pavilion',
+    'Wyler Pavilion',
+    'Bernard Mitchell Hospital',
+    '58th Street & Drexel',
+    "Comer Children's Hospital",
+    '57th Street & Drexel (NB)',
+    'Levi Hall (W)',
+    'Drexel Garage',
+    'Apostolic Lot',
+    'Kenwood & 63rd',
+    ],
+    'color': const Color.fromARGB(255, 230, 120, 70),
+    'abbreviation': 'AP/DX',
+    'info': 'Good for the University hospital/staff and places of worship',
+    'times': 'Mon-Fri, 10am-12:30am, 10am-3pm every 15 min, 3pm-12:30am every 10 min',
+    'special': 'AP/DX\nUntil 12:30am',
+  },
   {
     'label': 'Central',
     'stops': [
@@ -248,10 +368,26 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
     '53rd & Kimbark (WB)',
     'Booth School'
     ],
-    'color': Colors.orange,
+    'color': const Color.fromARGB(255, 250, 150, 0),
     'abbreviation': 'CEN',
     'info': 'Nighttime route for central campus (goes to Downtown Hyde Park!)',
-    'times': 'Every day, 4pm-4am, every 15-30 min'
+    'times': 'Every day, 4pm-4am, every 15-30 min',
+  },
+  {
+    'label': 'North',
+    'stops': [
+    'Reynolds Club',
+    'Regenstein Library (N)',
+    'Max Palevsky Residential Commons (NE Corner)',
+    'Ellis Garage & Ratner Athletic Center (East)',
+    'S. Drexel Ave & E 53rd St',
+    '55th Street & University',
+    'Alumni House (NW Corner)'
+    ],
+    'color': Colors.blue,
+    'abbreviation': 'NORTH',
+    'info': 'Nighttime route for northern apartments and north campus/dorms',
+    'times': 'Every day, 4pm-4am, every 15-30 min',
   },
   {
     'label': 'East',
@@ -273,39 +409,7 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
     'color': Colors.green,
     'abbreviation': 'EAST',
     'info': 'Nighttime route for eastern apartments and campus (goes to Downtown Hyde Park!)',
-    'times': 'Every day, 4pm-4am, every 15-30 min'
-  },
-  {
-    'label': 'North',
-    'stops': [
-    'Reynolds Club',
-    'Regenstein Library (N)',
-    'Max Palevsky Residential Commons (NE Corner)',
-    'Ellis Garage & Ratner Athletic Center (East)',
-    'S. Drexel Ave & E 53rd St',
-    '55th Street & University',
-    'Alumni House (NW Corner)'
-    ],
-    'color': Colors.blue,
-    'abbreviation': 'NORTH',
-    'info': 'Nighttime route for northern apartments and north campus/dorms',
-    'times': 'Every day, 4pm-4am, every 15-30 min'
-  },
-  {
-    'label': 'Regents Express',
-    'stops': [
-    'Law School (N)',
-    '57th St & Metra (NB)',
-    'E 56th St & S Cornell Ave (SW Corner)',
-    'E 56th St & S Hyde Park Blvd (SW Corner)',
-    'Shoreland Building',
-    'Regents Park Apartments',
-    'Regenstein Library (N)'
-    ],
-    'color': Colors.indigo,
-    'abbreviation': 'RE',
-    'info': 'Late evening route for Regents Park Apartments, campus hubs, and lakeshore',
-    'times': 'Mon-Fri, 5:20pm-9pm'
+    'times': 'Every day, 4pm-4am, every 15-30 min',
   },
   {
     'label': 'South',
@@ -327,10 +431,26 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
       'Regenstein Library (N)',
       'Levi Hall (W)'
     ],
-    'color': Colors.orange,
+    'color': const Color.fromARGB(255, 221, 85, 12),
     'abbreviation': 'SOUTH',
     'info': 'Nighttime route for southern apartments and south campus/dorms',
     'times': 'Every day, 4pm-4am, every 15-30 min'
+  },
+  {
+    'label': 'Regents Express',
+    'stops': [
+    'Law School (N)',
+    '57th St & Metra (NB)',
+    'E 56th St & S Cornell Ave (SW Corner)',
+    'E 56th St & S Hyde Park Blvd (SW Corner)',
+    'Shoreland Building',
+    'Regents Park Apartments',
+    'Regenstein Library (N)'
+    ],
+    'color': Colors.indigo,
+    'abbreviation': 'RE',
+    'info': 'Late evening route for Regents Park Apartments, campus hubs, and lakeshore',
+    'times': 'Mon-Fri, 5:20pm-9pm'
   },
   {
     'label': 'South Loop Shuttle',
@@ -341,9 +461,9 @@ final List<Map<String, dynamic>> nighttimeRoutes = [
       '57th St & Metra (SB)',
       'International House'
     ],
-    'color': const Color.fromARGB(255, 233, 30, 186),
+    'color': const Color.fromARGB(255, 255, 170, 235),
     'abbreviation': 'SLS',
     'info': 'Nighttime weekend route for south loop commuters',
     'times': 'Fri-Sat, 6pm-12:30am, every hour'
-  },
+  }
 ];
