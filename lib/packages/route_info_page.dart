@@ -3,10 +3,12 @@ import 'routes.dart';
 
 class RouteInfoPage extends StatelessWidget {
   final Map<String, dynamic> routePage;
+  final String highlightStop;
 
   const RouteInfoPage({
     super.key,
     required this.routePage,
+    required this.highlightStop,
   });
 
   @override
@@ -133,9 +135,9 @@ class RouteInfoPage extends StatelessWidget {
                                   routePage['stops'][index],
                                   style: TextStyle(
                                     fontFamily: 'DelaGothicOne',
-                                    fontSize: screenWidth * 0.04,
+                                    fontSize: highlightStop == routePage['stops'][index] ? screenWidth * 0.045 : screenWidth * 0.04,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white, // Text color matching the route
+                                    color: highlightStop == routePage['stops'][index] ? routePage['color'] : Colors.white,
                                   ),
                                 ),
                               ),

@@ -236,6 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(
                       builder: (context) => RouteInfoPage(
                         routePage: route,
+                        highlightStop: containsDropdownValue > -1 ? route['stops'][containsDropdownValue] : "",
                       ),
                     ),
                   ),
