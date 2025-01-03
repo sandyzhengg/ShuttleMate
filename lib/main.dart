@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Column(
                   children: [
                     Text(
-                      isDay ? "Daytime Routes" : "Nightride Routes",
+                      isDay ? "Daytime Routes" : "NightRide Routes",
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: screenWidth * 0.05,
