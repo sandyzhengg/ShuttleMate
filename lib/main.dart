@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       DropdownButtonHideUnderline(
                         child: Container(
                           width: screenWidth * 0.5,
-                          height: screenWidth * 0.1,
+                          height: screenHeight * 0.05,
                           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: Colors.white,

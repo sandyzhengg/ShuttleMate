@@ -18,12 +18,13 @@ class DayNightSwitchState extends State<DayNightSwitch> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
       onTap: () => widget.onChanged(!widget.isDay),
       child: Container(
         width: screenWidth * 0.2,
-        height: screenWidth * 0.1,
+        height: screenHeight * 0.05,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Color(0xFF4a4a4a),
@@ -40,8 +41,8 @@ class DayNightSwitchState extends State<DayNightSwitch> {
               left: widget.isDay ? 0 : screenWidth * 0.1,
               right: widget.isDay ? screenWidth * 0.1 : 0,
               child: Container(
-                width: screenWidth * 0.08,
-                height: screenWidth * 0.08,
+                width: screenHeight * 0.0425,
+                height: screenHeight * 0.0425,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: widget.isDay ? Color(0xFFc1e7e8): Color(0xFF252e2e),
