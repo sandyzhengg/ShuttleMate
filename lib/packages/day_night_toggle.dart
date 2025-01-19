@@ -39,7 +39,7 @@ class DayNightSwitchState extends State<DayNightSwitch> {
               duration: Duration(milliseconds: 250),
               curve: Curves.easeIn,
               left: widget.isDay ? 0 : screenWidth * 0.1,
-              right: widget.isDay ? screenWidth * 0.1 : 0,
+              right: widget.isDay ? screenWidth * 0.1: 0,
               child: Container(
                 width: screenHeight * 0.0425,
                 height: screenHeight * 0.0425,

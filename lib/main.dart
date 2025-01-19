@@ -43,9 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
   late final WebViewController controller;
 
   bool isDay = true;
+  bool isLeaving = false;
 
   List<Map<String, dynamic>> get currentRoutes => isDay ? daytimeRoutes : nighttimeRoutes;
-
 
   @override
   void initState() {
@@ -68,8 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  String dropdownValue = 'Mansueto Library';
-
+  String dropValue = "Mansueto Library";
+  List<String> dropdownValue = ['Mansueto Library', 'Reynolds Club'];
+  
   final List<dynamic> dropdownOptions = stopPlaces.values.expand((places) => places).toSet().toList()..sort();
 
   @override
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
             // First section with Dropdown and Text
             SizedBox(
-              height: screenHeight * 0.125,
+              height: screenHeight * 0.11,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -117,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         isDay ? "Daytime Routes" : "NightRide Routes",
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: screenWidth * 0.05,
+                          fontSize: screenWidth * 0.035,
                           color: isDay ?Colors.white : Colors.yellowAccent,
                         ),
                       ),
@@ -131,20 +132,58 @@ class _MyHomePageState extends State<MyHomePage> {
                         }),
                     ],
                   ),
+                  // Day/Night Toggle Switch
                   Column(
                     children: [
                       Text(
-                        "With Stops Nearby",
+                        isLeaving ? "Arriving" : "Departing",
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: screenWidth * 0.05,
+                          fontSize: screenWidth * 0.035,
+                          color: isDay ?Colors.white : Colors.yellowAccent,
+                        ),
+                      ),
+                      SizedBox(height: screenWidth * 0.025),
+                      SizedBox(
+                        width: screenWidth * 0.2,
+                        height: screenHeight * 0.05,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isLeaving = !isLeaving;
+                              dropValue = dropdownValue[isLeaving ? 1 : 0];
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isLeaving ? Colors.white : Color(0xFF4a4a4a), // Background color
+                            foregroundColor: Colors.black,
+                            side: BorderSide(
+                              color: isDay ? Color(0xFFc1e7e8) : Color(0xFF252e2e),
+                              width: 4, // Set the border width
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.directions_bus_filled, // Icons for arriving and leaving
+                            size: screenHeight * 0.025, // Adjust the size of the icon
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "From This Location",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: screenWidth * 0.035,
                           color: isDay ?Colors.white : Colors.yellowAccent,
                         ),
                       ),
                       SizedBox(height: screenWidth * 0.025),
                       DropdownButtonHideUnderline(
                         child: Container(
-                          width: screenWidth * 0.5,
+                          width: screenWidth * 0.4,
                           height: screenHeight * 0.05,
                           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
@@ -154,13 +193,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           child: DropdownButton<String>(
                             isExpanded: true,
-                            value: dropdownValue,
+                            value: dropValue,
                             icon: const Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             style: const TextStyle(color: Colors.black),
                             onChanged: (String? newValue) {
                               setState(() {
-                                dropdownValue = newValue!;
+                                dropValue = newValue!;
+                                dropdownValue[isLeaving ? 1 : 0] = newValue!;
                               });
                             },
                             items: dropdownOptions.map<DropdownMenuItem<String>>((dynamic value) {
@@ -196,18 +236,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: SizedBox(
                 width: screenWidth * 1,
-                height: screenHeight * 0.5,
+                height: screenHeight * 0.55,
                 child: WebViewWidget(controller: controller),
               ),
             ),
             // Shuttle Stops Text
             SizedBox(
-              height: screenHeight * 0.05,
+              height: screenHeight * 0.045,
               child: Text(
                 "Shuttle Routes",
                 style: TextStyle(
                   fontFamily: 'DelaGothicOne',
-                  fontSize: screenWidth * 0.05,
+                  fontSize: screenWidth * 0.0475,
                   color: isDay ?Colors.white : Colors.yellowAccent,
                 ),
               ),
@@ -223,35 +263,39 @@ class _MyHomePageState extends State<MyHomePage> {
       itemCount: currentRoutes.length,
       itemBuilder: (context, index) {
         final route = currentRoutes[index];
-        int containsDropdownValue = -1;
+        List<int> containsDropdownValue = [-1, -1];
         for (int i = 0; i < route['stops'].length; i++) {
-          if (stopPlaces[route['stops'][i]].contains(dropdownValue)) {
-            containsDropdownValue = i;
-            break;
+          if (stopPlaces[route['stops'][i]].contains(dropdownValue[1])) {
+            for (int j = 0; j < route['stops'].length; j++) {
+              if (stopPlaces[route['stops'][j]].contains(dropdownValue[0])) {
+                containsDropdownValue = [j, i];
+                break;
+              }
+            }
           }
         }
-
         return GestureDetector(
           onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => RouteInfoPage(
                           routePage: route,
-                          highlightStop: containsDropdownValue > -1 ? route['stops'][containsDropdownValue] : "",
+                          highlightLeaving: containsDropdownValue[0] > -1 ? route['stops'][containsDropdownValue[0]] : "",
+                          highlightArrival: containsDropdownValue[1] > -1 ? route['stops'][containsDropdownValue[1]] : "",
                         ),
                       ),
                     ),
           child: Container(
             width: screenWidth * 0.45,
-            height: screenWidth * 0.45,
+            height: screenWidth * 0.1,
             decoration: BoxDecoration(
-              color: containsDropdownValue > -1 ? route['color'] : Colors.white,
+              color: containsDropdownValue[0] > -1 ? route['color'] : Colors.white,
               shape: BoxShape.circle,
               border: Border.all(
-                color: containsDropdownValue > -1 ? Colors.white : route['color'], // Border color based on route
+                color: containsDropdownValue[0] > -1 ? Colors.white : route['color'], // Border color based on route
                 width: screenWidth * 0.01,
               ),
-              boxShadow: containsDropdownValue > -1
+              boxShadow: containsDropdownValue[0] > -1
                   ? [
                       BoxShadow(
                         color: route['color'].withOpacity(0.75),
@@ -265,16 +309,16 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                (containsDropdownValue > -1 ? Container() : Icon(
+                (containsDropdownValue[0] > -1 ? Container() : Icon(
                   Icons.directions_bus, // Bus icon
                   size: screenWidth * 0.05, // Adjust the size of the icon
-                  color: containsDropdownValue > -1 ? Colors.white : route['color'], // Icon color matching the route
+                  color: containsDropdownValue[0] > -1 ? Colors.white : route['color'], // Icon color matching the route
                 )),
                 Text(
-                  containsDropdownValue > -1 ? route['stops'][containsDropdownValue] : (route['special'] ?? route['label']),
+                  containsDropdownValue[0] > -1 ? route['stops'][containsDropdownValue[isLeaving ? 1 : 0]] : (route['special'] ?? route['label']),
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: containsDropdownValue > -1 ? screenWidth * 0.035 * ((65 - route['stops'][containsDropdownValue].length) / 65) : screenWidth * 0.03 * ((45 - route['label'].length) / 45),
+                    fontSize: containsDropdownValue[0] > -1 ? screenWidth * 0.035 * ((65 - route['stops'][containsDropdownValue[isLeaving ? 1 : 0]].length) / 65) : screenWidth * 0.03 * ((45 - route['label'].length) / 45),
                     fontWeight: FontWeight.bold,
                     color: Colors.black, // Text color matching the route
                   ),
@@ -294,34 +338,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
   );
 }
-
-/**
-void _showRouteStops(Map<String, dynamic> route) {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              route['label'],
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            ...route['stops'].map<Widget>((stop) {
-              return ListTile(
-                leading: Icon(Icons.place, color: route['color']),
-                title: Text(stop),
-              );
-            }).toList(),
-          ],
-        ),
-      );
-    },
-  );
-}
-**/
 }
