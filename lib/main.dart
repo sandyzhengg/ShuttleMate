@@ -241,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: SizedBox(
                 width: screenWidth * 1,
-                height: screenHeight * 0.45,
+                height: screenHeight * 0.45, //decreased to make the times buttons fit
                 child: WebViewWidget(controller: controller),
               ),
             ),
@@ -298,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             // GridView with buttons   
             Expanded(
-              flex: 2,
+              flex: 2, //added so the bottom box widens accordingly 
     child: GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 6, // 6 columns
