@@ -7,6 +7,8 @@ import "packages/day_night_toggle.dart";
 import 'packages/route_info_page.dart';
 import 'packages/routes.dart';
 
+import 'packages/ap_service.dart'; 
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -45,12 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isDay = true;
   bool isLeaving = false;
 
+  //add in these to track departure/arrival stops and the selected route
+  String? selectedDepartureStop;
+  String? selectedArrivalStop;
+  String? selectedRouteId; // To store the selected route ID
+
+
   List<Map<String, dynamic>> get currentRoutes => isDay ? daytimeRoutes : nighttimeRoutes;
 
   @override
   void initState() {
   super.initState();
-
   controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..loadRequest(
@@ -58,6 +65,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void updateRouteTimes(String routeId, String departureStopId, String arrivalStopId) async {
+    try {
+      final data = await ApiService.fetchRouteTimes(routeId, departureStopId, arrivalStopId);
+      setState(() {
+        selectedRoute?['departure_time'] = data['departure_time'];
+        selectedRoute?['arrival_time'] = data['arrival_time'];
+        selectedRoute?['total_time'] = data['total_time'];
+      });
+    } catch (e) {
+      print('Failed to update route times: $e');
+    }
+  }
   
   Future<void> _launchURL() async {
     final Uri url = Uri.parse('https://chicago.passiogo.com/');
@@ -207,6 +226,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 dropValue = newValue!;
                                 dropdownValue[isLeaving ? 1 : 0] = newValue!;
                               });
+
+                              final routeId = "selectedRouteId"; // Replace with the actual route ID
+                              final departureStopId = dropdownValue[0]; // Departure stop
+                              final arrivalStopId = dropdownValue[1];   // Arrival stop
+                              updateRouteTimes(routeId, departureStopId, arrivalStopId);
                             },
                             items: dropdownOptions.map<DropdownMenuItem<String>>((dynamic value) {
                               return DropdownMenuItem<String>(
@@ -292,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text('Total Time'),
       ),
     ],
-  ),
+  ), 
 ),
             //end here
 
