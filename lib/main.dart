@@ -70,6 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String dropValue = "Mansueto Library";
   List<String> dropdownValue = ['Mansueto Library', 'Reynolds Club'];
+
+
+  // Variable to store the currently selected route
+  Map<String, dynamic>? selectedRoute; 
+
   
   final List<dynamic> dropdownOptions = stopPlaces.values.expand((places) => places).toSet().toList()..sort();
 
@@ -236,13 +241,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: SizedBox(
                 width: screenWidth * 1,
-                height: screenHeight * 0.55,
+                height: screenHeight * 0.45,
                 child: WebViewWidget(controller: controller),
               ),
             ),
+            
             // Shuttle Stops Text
             SizedBox(
-              height: screenHeight * 0.045,
+              height: screenHeight * 0.04,
               child: Text(
                 "Shuttle Routes",
                 style: TextStyle(
@@ -252,8 +258,47 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+          //section for displaying times
+          Padding(
+  padding: const EdgeInsets.symmetric(vertical: 4.0),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      ElevatedButton(
+        onPressed: () {
+          // Show departure time
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Departure Time: ${selectedRoute?['departure_time'] ?? 'N/A'}')),
+          );
+        },
+        child: Text('Departure'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          // Show arrival time
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Arrival Time: ${selectedRoute?['arrival_time'] ?? 'N/A'}')),
+          );
+        },
+        child: Text('Arrival'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          // Show total time
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Total Time: ${selectedRoute?['total_time'] ?? 'N/A'}')),
+          );
+        },
+        child: Text('Total Time'),
+      ),
+    ],
+  ),
+),
+            //end here
+
             // GridView with buttons   
             Expanded(
+              flex: 2,
     child: GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 6, // 6 columns
